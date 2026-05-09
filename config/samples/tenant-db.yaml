@@ -1,0 +1,35 @@
+## config/samples/tenant-db.yaml
+##
+## A PostgresInstance for a single tenant.
+## Apply with: kubectl apply -f tenant-db.yaml
+##
+## The operator will:
+##   1. Create a StatefulSet (postgres:16-alpine, 1 replica)
+##   2. Create a headless Service for stable DNS
+##   3. Poll pg_stat_activity every 60s
+##   4. Scale to 0 after 15 minutes of no active connections
+##   5. Retain the PVC so data survives the pause
+
+apiVersion: db.odilon.dev/v1alpha1
+kind: PostgresInstance
+metadata:
+  name: tenant-acme
+  namespace: tenants
+spec:
+  version: "16"
+  storage: "10Gi"
+  idleTimeoutMinutes: 2
+
+
+---
+## The Secret the operator reads to connect and to inject into the pod.
+## In production this would come from Vault or External Secrets Operator.
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tenant-acme-secret
+  namespace: tenants
+type: Opaque
+stringData:
+  password: "changeme"

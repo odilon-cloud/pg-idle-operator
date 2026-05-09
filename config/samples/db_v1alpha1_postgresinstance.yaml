@@ -1,0 +1,9 @@
+apiVersion: db.odilon.dev/v1alpha1
+kind: PostgresInstance
+metadata:
+  labels:
+    app.kubernetes.io/name: pg-idle-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: postgresinstance-sample
+spec:
+  # TODO(user): Add fields here
