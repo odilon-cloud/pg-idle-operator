@@ -407,9 +407,9 @@ func (r *PostgresInstanceReconciler) queryActiveConnections(
 
 	// DNS name of the first StatefulSet pod:
 	// <statefulset>-0.<headless-svc>.<namespace>.svc.cluster.local
-	// host := fmt.Sprintf("%s-0.%s.%s.svc.cluster.local",
-	// 	instance.Name, instance.Name, instance.Namespace)
-	host := "localhost"
+	host := fmt.Sprintf("%s-0.%s.%s.svc.cluster.local",
+		instance.Name, instance.Name, instance.Namespace)
+
 	dsn := fmt.Sprintf(
 		"host=%s port=5432 user=postgres password=%s dbname=app "+
 			"application_name=pg-idle-operator sslmode=disable connect_timeout=5",
