@@ -420,7 +420,7 @@ func (r *PostgresInstanceReconciler) queryActiveConnections(
 	if err != nil {
 		return 0, fmt.Errorf("opening connection: %w", err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	// Use a tight deadline so a slow/unavailable pod doesn't block reconciliation.
 	queryCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
