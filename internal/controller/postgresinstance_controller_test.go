@@ -52,6 +52,10 @@ var _ = Describe("PostgresInstance Controller", func() {
 						Namespace: "default",
 					},
 					// TODO(user): Specify other spec details if needed.
+					Spec: dbv1alpha1.PostgresInstanceSpec{
+						Version: "16",
+						Storage: "10Gi",
+					},
 				}
 				Expect(k8sClient.Create(ctx, resource)).To(Succeed())
 			}
